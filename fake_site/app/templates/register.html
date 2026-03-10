@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            background-color: #ebe7ff; 
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 400px;
+            margin: 70px auto;
+            background: #fff;
+            padding: 40px 50px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .errorlist {
+            list-style: none;
+            padding: 0;
+            margin: 5px 0;
+            color: red;
+            font-size: 0.9em;
+        }
+
+        .alert {
+            text-align: center;
+            color: red;
+            margin-bottom: 15px;
+        }
+
+        button {
+            width: 100%;
+            background-color: #FF6F00;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            margin-top: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #e65c00;
+        }
+
+        a {
+            color: #3f3cff;
+            text-decoration: none;
+        }
+
+        p {
+            text-align: center;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>SIGN UP</h2>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        {% for field in form %}
+            <label>{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}
+                <ul class="errorlist">
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endfor %}
+
+        <button type="submit">Sign Up</button>
+    </form>
+
+    <p>
+        Already have an account? <a href="{% url 'login' %}">Login here</a>
+    </p>
+</div>
+
+</body>
+</html>

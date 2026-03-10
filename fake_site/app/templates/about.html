@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+
+<style>
+    .about-section {
+        background-color: #eceaff;
+        padding: 60px 15%;
+        min-height: 80vh;
+    }
+
+    .about-title {
+        font-size: 36px;
+        font-weight: bold;
+        text-align: center;
+        color: #222;
+        margin-bottom: 30px;
+    }
+
+    .about-text {
+        font-size: 18px;
+        line-height: 1.8;
+        color: #3b3b3b;
+        text-align: justify;
+    }
+
+    .highlight-box {
+        margin-top: 30px;
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0,0,0,0.08);
+    }
+
+    h3 {
+        margin-top: 20px;
+        color: #FF6F00;
+    }
+</style>
+
+<div class="about-section fade-in">
+    <h1 class="about-title">About Fake Review Detector</h1>
+
+    <div class="highlight-box">
+
+        <p class="about-text">
+            The <strong>Fake Review Detector</strong> is an AI-powered web application designed to analyze product reviews 
+            and determine whether they are genuine or fake. In recent years, online shopping platforms have faced 
+            an increasing challenge due to fake or misleading reviews that influence user purchasing decisions. 
+            This system helps users identify unreliable or bot-generated reviews using modern deep learning techniques.
+        </p>
+
+        <h3><i class="bi bi-gear-wide-connected text-warning"></i> How It Works</h3>
+        <p class="about-text">
+            The tool uses a fine-tuned <strong>DistilBERT transformer model</strong>, trained on a labeled dataset containing 
+            both deceptive and truthful online reviews. The model analyzes linguistic patterns, sentiment tone, writing repetitiveness,
+            exaggeration cues, and contextual phrasing to classify a given review as:
+            <br><br>
+            ✔ <strong>GENUINE</style></strong> — Natural human expression with balanced opinions<br>
+            ✔ <strong>FAKE</strong> — Artificial, exaggerated, repetitive, or bot-like text
+        </p>
+
+        <h3><i class="bi bi-folder2-open text-warning"></i> Dataset Used</h3>
+        <p class="about-text">
+            The dataset used includes thousands of annotated reviews with balanced labels for Fake and Genuine content.
+            It was preprocessed with tokenization, normalization, and input encoding before training the model.
+        </p>
+
+        <h3><i class="bi bi-cpu-fill text-warning"></i> Model & Techniques</h3>
+        <p class="about-text">
+            - DistilBERT Transformer model<br>
+            - Tokenization using HuggingFace libraries<br>
+            - Fine-tuned classification layers<br>
+            - Evaluation via F1-Score, Precision, Recall, and Confusion Matrix<br>
+        </p>
+
+        <h3><i class="bi bi-tools text-warning"></i> Technologies Used</h3>
+        <p class="about-text">
+            ✔ Python • Django • HuggingFace Transformers • PyTorch • HTML5/CSS3<br>
+        </p>
+
+        <p class="about-text" style="margin-top: 25px;">
+            This project aims to provide a meaningful contribution toward reducing misinformation in online shopping ecosystems by assisting customers in identifying reviews that may not reflect real product experiences.
+        </p>
+    </div>
+</div>
+
+{% endblock %}

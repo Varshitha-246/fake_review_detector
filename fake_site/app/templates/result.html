@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Detection Result - Fake Review Detector{% endblock %}
+
+{% block content %}
+<style>
+  .result-bg {
+    background: url("{% static 'images/bg.jpg' %}") no-repeat center center fixed;
+    background-size: cover;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .result-card {
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(6px);
+    padding: 45px 50px;
+    border-radius: 12px;
+    max-width: 800px;
+    width: 90%;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 0.7s ease-in-out;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .result-card h2 {
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 25px;
+  }
+
+  .result-text {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 12px;
+  }
+
+  .label {
+    font-weight: 700;
+    font-size: 1.4rem;
+  }
+
+  .fake {
+    color: #d32f2f;
+  }
+
+  .genuine {
+    color: #2e7d32;
+  }
+
+  .review-type {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-top: 15px;
+    color: #000;
+  }
+
+  .reason-text {
+    font-size: 1rem;
+    color: #444;
+    font-style: italic;
+    margin-top: 10px;
+  }
+
+  .btn-back {
+    background-color: #FF6F00;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: 0.3s;
+    margin-top: 25px;
+  }
+
+  .btn-back:hover {
+    background-color: #e55f00;
+  }
+</style>
+
+<div class="result-bg">
+  <div class="result-card">
+
+    <h2>Fake Review Detection Result</h2>
+
+    <p class="result-text"><strong>Review:</strong> "{{ review }}"</p>
+
+    <p class="result-text">
+      <strong>Prediction:</strong>
+      <span class="label {% if label == 'FAKE' %}fake{% else %}genuine{% endif %}">
+        {{ label }}
+      </span>
+    </p>
+
+    <!-- <p class="result-text"><strong>Confidence:</strong> {{ confidence }}%</p> -->
+    <p class="confidence">
+      <strong>Confidence:</strong>
+      {% if confidence %}
+        {{ confidence }}%
+      {% else %}
+        N/A
+      {% endif %}
+    </p>
+
+    <p class="review-type"><strong>Review Type:</strong> {{ review_type }}</p>
+
+    <p class="reason-text"><strong>Reason:</strong> {{ reason }}</p>
+
+    <a href="{% url 'predict_review' %}" class="btn btn-back mt-3">Analyze Another Review</a>
+
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Home - Fake Review Detector{% endblock %}
+{% block content %}
+
+<section class="hero fade-in" style="background-color:#6446fa;color:white;text-align:center;padding:180px 20px;position:relative;">
+  <h1 style="font-weight:700;font-size:3rem;">Welcome to Fake Review Detector</h1>
+  <p style="font-size:1.1rem;">Know the percentage of fake reviews of your favorite online products!</p>
+  <a href="{% url 'predict_review' %}" class="btn" style="background-color:#FF6F00;color:white;border-radius:25px;font-weight:bold;padding:10px 30px;margin-top:20px;">Get Started</a>
+</section>
+
+{% endblock %}

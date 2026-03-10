@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>User Contact Requests</h2>
+    <table class="table table-bordered mt-3">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Message</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        {% for msg in messages %}
+        <tr>
+            <td>{{ msg.name }}</td>
+            <td>{{ msg.email }}</td>
+            <td>{{ msg.message }}</td>
+            <td>
+                {% if msg.is_replied %}
+                    ✔ Replied
+                {% else %}
+                    ❌ Not Replied
+                {% endif %}
+            </td>
+            <td>
+                <a href="{% url 'reply_message' msg.id %}" class="btn btn-primary btn-sm">View / Reply</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

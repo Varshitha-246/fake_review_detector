@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Contact{% endblock %}
+
+{% block content %}
+
+<style>
+.contact-section {
+    background-color: #eceaff;
+    padding: 60px 15%;
+    min-height: 85vh;
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+}
+
+.contact-card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+}
+
+.contact-card h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: bold;
+}
+
+.form-control {
+    border-radius: 10px;
+}
+
+.contact-info {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.contact-info p {
+    font-size: 16px;
+}
+
+.icon {
+    color: #FF6F00;
+    font-size: 20px;
+    margin-right: 8px;
+}
+</style>
+
+
+<div class="contact-section fade-in">
+
+    <div class="contact-card">
+        <h2><i class="bi bi-envelope-fill text-warning"></i> Contact Us</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-success text-center mt-2">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+
+            {{ form.as_p }}
+
+            <button class="btn w-100" style="background-color:#FF6F00; color:white;">Send Message</button>
+        </form>
+
+
+        <div class="contact-info fade-in" style="animation-delay: 0.4s;">
+            <p><i class="bi bi-telephone-fill icon"></i> +1 312 734 0837 </p>
+            <p><i class="bi bi-envelope-paper-fill icon"></i> support@fakereviewdetector.com</p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

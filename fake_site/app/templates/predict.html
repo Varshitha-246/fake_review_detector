@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Fake Reviews Detection{% endblock %}
+
+{% block content %}
+<style>
+  /* Background using your local static image */
+  .predict-bg {
+    background: url("{% static 'images/bg.jpg' %}") no-repeat center center fixed;
+    background-size: cover;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Card design */
+  .predict-card {
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(5px);
+    padding: 40px 50px;
+    border-radius: 20px;
+    max-width: 700px;
+    width: 90%;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .predict-card h2 {
+    font-weight: 600;
+    text-align: center;
+    color: #222;
+    margin-bottom: 30px;
+  }
+
+  .predict-card label {
+    font-weight: 500;
+    color: #333;
+  }
+
+  .btn-analyze {
+    background-color: #FF6F00;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    font-weight: 600;
+    border-radius: 6px;
+    transition: 0.3s;
+  }
+
+  .btn-analyze:hover {
+    background-color: #e55f00;
+  }
+</style>
+
+<div class="predict-bg fade-in">
+  <div class="predict-card">
+    <h2>Fake Reviews Detection</h2>
+
+    {% if error %}
+      <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="review" class="form-label">Review Text</label>
+        <textarea
+          name="review"
+          class="form-control"
+          id="review"
+          rows="3"
+          placeholder="Write your product review here..."
+          required
+        ></textarea>
+      </div>
+
+      <div class="text-center">
+        <button type="submit" class="btn btn-analyze">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+
+
+

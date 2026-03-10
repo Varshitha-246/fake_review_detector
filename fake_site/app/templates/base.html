@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Fake Review Detector{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+
+
+  <style>
+  body {
+    font-family: 'Merriweather', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  /* Navbar */
+  .navbar {
+    background-color: #8B8235; /* Olive tone */
+    padding: 1rem 2rem;
+  }
+
+  .navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: white !important;
+  }
+
+  /* Default nav link style */
+  .navbar-nav .nav-link {
+    color: white !important;
+    margin-left: 20px;
+    font-weight: 500;
+    border-radius: 20px;
+    padding: 6px 15px;
+    transition: all 0.3s ease;
+  }
+
+  /* Hover and active effect */
+  .navbar-nav .nav-link:hover,
+  .navbar-nav .nav-link.active {
+    background-color: #FF6F00 !important;
+    color: white !important;
+  }
+
+  /* "Get Started" and "Logout" buttons styled same as links */
+  .navbar-nav .nav-link.btn {
+    background-color: transparent !important;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+  }
+
+  .navbar-nav .nav-link.btn:hover {
+    background-color: #FF6F00 !important;
+    color: white !important;
+    transform: scale(1.05);
+  }
+
+  /* Logout button (same hover as Get Started) */
+  .logout-btn {
+    background-color: transparent !important;
+    border: 2px solid #FF6F00;
+    border-radius: 20px;
+    padding: 6px 15px;
+    color: white !important;
+    font-weight: 500;
+    margin-left: 15px;
+    transition: all 0.3s ease;
+  }
+
+  .logout-btn:hover {
+    background-color: #FF6F00 !important;
+    color: white !important;
+    transform: scale(1.05);
+  }
+
+  /* Footer */
+  footer {
+    background-color: #8B8235;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    font-size: 0.9rem;
+    margin-top: 0;
+  }
+
+  /* Fade-in animation */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+</style>
+  {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+  <!-- Header/Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'home' %}">Fake Review Detector</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav align-items-center">
+          <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">Home</a></li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url 'about' %}">
+              About
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}" href="{% url 'contact' %}">
+              Contact
+            </a>
+          </li>
+            <a class="nav-link btn text-white" href="{% url 'predict_review' %}" style="background-color:#FF6F00;border-radius:20px;">Get Started</a>
+          </li>
+          <!-- New -->
+          {% if user.is_authenticated %}
+              {% if user.is_superuser %}
+              <li class="nav-item">
+                  <a class="nav-link {% if request.resolver_match.url_name == 'admin_messages' %}active{% endif %}"
+                    href="{% url 'admin_messages' %}">
+                    Contact Requests
+                    {% if admin_unread > 0 %}
+                          <span class="badge bg-danger">{{ admin_unread }}</span>
+                    {% endif %}
+                  </a>
+              </li>
+              {% else %}
+                  <!-- Normal User sees Notifications -->
+                  <li class="nav-item">
+                      <a class="nav-link {% if request.resolver_match.url_name == 'notifications' %}active{% endif %}"
+                        href="{% url 'notifications' %}">
+                        Notifications 
+                        {% if unread_count > 0 %}
+                            <span class="badge bg-danger">{{ unread_count }}</span>
+                        {% endif %}
+                      </a>
+                  </li>
+              {% endif %}
+          {% endif %}
+          <!-- to here -->
+
+          {% if user.is_authenticated %}
+            <!-- Show only when user is logged in -->
+            <li class="nav-item">
+              <a class="nav-link logout-btn" href="{% url 'logout' %}">Logout</a>
+            </li>
+          {% else %}
+            <!-- Optional: login/register links when not logged in -->
+            <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="container-fluid p-0 ">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Fake Review Detector | Built with using Django & SGDClassifier with TF-IDF Vectorization</p>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>
